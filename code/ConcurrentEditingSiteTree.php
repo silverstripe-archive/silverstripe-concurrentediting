@@ -1,5 +1,7 @@
 <?php
-
+/**
+ * @package concurrentediting
+ */
 class ConcurrentEditingSiteTree extends DataObjectDecorator {
 	function extraStatics() {
 		return array(

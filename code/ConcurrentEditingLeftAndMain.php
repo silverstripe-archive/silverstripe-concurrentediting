@@ -1,5 +1,7 @@
 <?php
-
+/**
+ * @package concurrentediting
+ */
 class ConcurrentEditingLeftAndMain extends LeftAndMainDecorator {
 	static $allowed_actions = array(
 		'concurrentEditingPing',
