@@ -8,6 +8,9 @@ class ConcurrentEditingSiteTree extends DataObjectDecorator {
 			'db' => array(
 				'SaveCount' => 'Int'
 			),
+			'has_one' => array(
+				'LastEditedBy' => 'Member'
+			),
 			'defaults' => array(
 				'SaveCount' => '0'
 			),
@@ -25,5 +28,9 @@ class ConcurrentEditingSiteTree extends DataObjectDecorator {
 	function updateCMSFields(&$fields) {
 		$alert = new LiteralField("SiteTree_Alert", '<div deletedfromstage="'.((int) $this->owner->getIsDeletedFromStage()).'" savecount="'.$this->owner->SaveCount.'" id="SiteTree_Alert"></div>');
 		$fields->insertBefore($alert, 'Root');
+	}
+
+	function onBeforeWrite() {
+		$this->owner->LastEditedByID = Member::currentUserID();
 	}
 }

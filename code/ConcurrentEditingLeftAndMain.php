@@ -37,12 +37,25 @@ class ConcurrentEditingLeftAndMain extends LeftAndMainDecorator {
 				if ($user->ID == Member::currentUserId()) continue;
 				$names[] = trim($user->FirstName . ' ' . $user->Surname);
 			}
-			$return = array('status' => 'editing', 'names' => $names);
-			
-			// Has it been published since the CMS first loaded it?
-			$usersSaveCount = isset($_REQUEST['SaveCount']) ? $_REQUEST['SaveCount'] : $page->SaveCount;
-			if ($usersSaveCount < $page->SaveCount) {
-				$return = array('status' => 'not_current_version');
+			$return = array('status' => 'editing', 'names' => $names, 'isLastEditor' => false);
+			if ($page->LastEditedByID == Member::currentUserID()) {
+				$return['isLastEditor'] = true;
+				$lastTwoVersions = $page->allVersions('', '', 2)->toArray();
+				if (count($lastTwoVersions) >= 2) {
+					$url = "admin/compareversions/{$page->ID}/?From={$lastTwoVersions[1]->Version}&To={$page->Version}";
+					$link = "<a href=\"{$url}\">here</a>";
+					$return['compareVersionsLink'] = $link;
+					$member = DataObject::get_by_id('Member', $page->LastEditedByID);
+					if ($member) {
+						$return['lastEditor'] = $member->getTitle();
+					}
+				}
+			} else {
+				// Has it been published since the CMS first loaded it?
+				$usersSaveCount = isset($_REQUEST['SaveCount']) ? $_REQUEST['SaveCount'] : $page->SaveCount;
+				if ($usersSaveCount < $page->SaveCount) {
+					$return = array('status' => 'not_current_version');
+				}
 			}
 		}
 		
