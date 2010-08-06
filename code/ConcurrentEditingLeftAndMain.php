@@ -50,12 +50,11 @@ class ConcurrentEditingLeftAndMain extends LeftAndMainDecorator {
 						$return['lastEditor'] = $member->getTitle();
 					}
 				}
-			} else {
-				// Has it been published since the CMS first loaded it?
-				$usersSaveCount = isset($_REQUEST['SaveCount']) ? $_REQUEST['SaveCount'] : $page->SaveCount;
-				if ($usersSaveCount < $page->SaveCount) {
-					$return = array('status' => 'not_current_version');
-				}
+			}
+			// Has it been published since the CMS first loaded it?
+			$usersSaveCount = isset($_REQUEST['SaveCount']) ? $_REQUEST['SaveCount'] : $page->SaveCount;
+			if ($usersSaveCount < $page->SaveCount) {
+				$return['status'] = 'not_current_version';
 			}
 		}
 		
