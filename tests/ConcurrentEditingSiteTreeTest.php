@@ -17,7 +17,6 @@ class ConcurrentEditingSiteTreeTest extends SapphireTest {
 
 	/**
 	 * Test the function @see ConcurrentEditingSiteTree::onBeforeWrite
-	 * @covers ConcurrentEditingSiteTree::onBeforeWrite
 	 */
 	function testOnBeforeWrite() {
 		$page = new Page();

@@ -10,7 +10,6 @@ class ConcurrentEditingLeftAndMainTest extends FunctionalTest {
 	
 	/**
 	 * Test the function @see ConcurrentEditingLeftAndMain::concurrentEditingPing
-	 * @covers ConcurrentEditingLeftAndMain::concurrentEditingPing
 	 */
 	function testConcurrentEditingPing() {
 		$this->user1 = $this->objFromFixture('Member', 'user1');
