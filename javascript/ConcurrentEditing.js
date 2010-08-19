@@ -21,7 +21,7 @@ var showOverwroteMessage = false;
  * concurrent editing status.
  */
 function pingFunction() {
-    if ($('Form_EditForm_ID') && $('SiteTree_Alert')) {
+    if ($('Form_EditForm_ID') && $('SiteTree_Alert') && !window.location.toString().match(/compareversions/)) {
         var url = "admin/concurrentEditingPing?ID="+CurrentPage.id()+'&SaveCount='+CurrentPage.saveCount();
         new Ajax.Request(url, {
                     onSuccess: function(t) {
