@@ -19,7 +19,7 @@ class ConcurrentEditingSiteTree extends DataObjectDecorator {
 			),
 			'many_many_extraFields' => array(
 				'UsersCurrentlyEditing' => array(
-					'LastPing' => 'SSDatetime'
+					'LastPing' => 'SS_Datetime'
 				)
 			)
 		);

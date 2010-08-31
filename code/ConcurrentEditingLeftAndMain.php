@@ -5,6 +5,7 @@
 class ConcurrentEditingLeftAndMain extends LeftAndMainDecorator {
 	static $allowed_actions = array(
 		'concurrentEditingPing',
+		'restoreRemotelyDeleted',
 	);
 	
 	static $edit_timeout = 35;
@@ -24,7 +25,11 @@ class ConcurrentEditingLeftAndMain extends LeftAndMainDecorator {
 			$return = array('status' => 'not_found');
 		} elseif ($page->getIsDeletedFromStage()) {
 			// Page has been deleted from stage
-			$return = array('status' => 'deleted');
+			$return = array(
+				'status' => 'deleted',
+				'restoreDeletedUrl' => 'admin/restoreRemotelyDeleted?ID=' . (int)$page->ID,
+				'viewDeletedUrl' => 'admin/show/' . (int)$page->ID,
+			);
 		} else {
 			// Mark me as editing if I'm not already
 			$page->UsersCurrentlyEditing()->add(Member::currentUser());
@@ -62,6 +67,10 @@ class ConcurrentEditingLeftAndMain extends LeftAndMainDecorator {
 		DB::query("DELETE FROM SiteTree_UsersCurrentlyEditing WHERE LastPing < '".date('Y-m-d H:i:s', time()-self::$edit_timeout)."'");
 		
 		return Convert::array2json($return);
+	}
+	
+	function restoreRemotelyDeleted() {
+		$response = singleton('CMSMain')->restore();
 	}
 	
 	function onAfterSave(&$record) {
