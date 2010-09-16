@@ -1,0 +1,30 @@
+Member:
+    user1:
+        FirstName: Test1
+        Surname: User1
+
+    user2:
+        FirstName: Test2
+        Surname: User2
+
+Group:
+    admins:
+        ClassName: Group
+        Code: administrators
+        Title: Administrators
+
+Permission:
+    adminperms:
+        Code: ADMIN
+        GroupID: =>Group.admins
+        Type: 1
+
+Group_Members:
+    group_members7:
+        GroupID: =>Group.admins
+        MemberID: =>Member.user1
+
+    group_members8:
+        GroupID: =>Group.admins
+        MemberID: =>Member.user2
+
