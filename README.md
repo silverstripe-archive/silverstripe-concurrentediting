@@ -3,8 +3,8 @@ Concurrent Editing Module
 ####################################################
 
 # Maintainer Contact
-Tom Rix (Nickname: trix)
-<tom (at) silverstripe (dot) com>
+Andreas Piening (Nickname: apiening)
+<andreas (at) silverstripe (dot) com>
 
 # Requirements
 SilverStripe 2.4.0 or newer
