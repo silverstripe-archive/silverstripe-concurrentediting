@@ -33,8 +33,8 @@ class ConcurrentEditingLeftAndMain extends LeftAndMainDecorator {
 		} else {
 			// Mark me as editing if I'm not already
 			$page->UsersCurrentlyEditing()->add(Member::currentUser());
-			DB::query("UPDATE SiteTree_UsersCurrentlyEditing SET LastPing = '".date('Y-m-d H:i:s')."'
-				WHERE MemberID = ".Member::currentUserID()." AND SiteTreeID = {$page->ID}");
+			DB::query("UPDATE \"SiteTree_UsersCurrentlyEditing\" SET \"LastPing\" = '".date('Y-m-d H:i:s')."'
+				WHERE \"MemberID\" = ".Member::currentUserID()." AND \"SiteTreeID\" = {$page->ID}");
 			
 			// Page exists, who else is editing it?
 			$names = array();
@@ -64,7 +64,7 @@ class ConcurrentEditingLeftAndMain extends LeftAndMainDecorator {
 		}
 		
 		// Delete pings older than *timeout* from the cache...
-		DB::query("DELETE FROM SiteTree_UsersCurrentlyEditing WHERE LastPing < '".date('Y-m-d H:i:s', time()-self::$edit_timeout)."'");
+		DB::query("DELETE FROM \"SiteTree_UsersCurrentlyEditing\" WHERE \"LastPing\" < '".date('Y-m-d H:i:s', time()-self::$edit_timeout)."'");
 		
 		return Convert::array2json($return);
 	}
