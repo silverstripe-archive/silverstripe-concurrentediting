@@ -71,10 +71,10 @@ class ConcurrentEditingLeftAndMainTest extends FunctionalTest {
 		$resp = $this->get(sprintf($url, $page->SaveCount, $page->ID));
 		$this->assertEquals($page->UsersCurrentlyEditing()->Count(), 2);
 		$json = Convert::json2array($resp->getBody());
-		$this->assertEquals('editing', $json['status'], "Expected not_current_version, got: " .var_export($json,1));
+ 		$this->assertEquals('editing', $json['status'], "Expected not_current_version, got: " .var_export($json,1));
 		$this->assertEquals(array('Test2 User2'), $json['names'], "Expected Test2 User2 is other editor, got: " .var_export($json,1));
 		$this->assertEquals(true, $json['isLastEditor'], "Expected to be last editor, got: " .var_export($json,1));
-		$this->assertEquals("<a href=\"admin/compareversions/1/?From={$oldVersion}&To={$page->Version}\">here</a>",
+		$this->assertEquals("<a href=\"admin/compareversions/" . $page->ID . "/?From={$oldVersion}&To={$page->Version}\">here</a>",
 			$json['compareVersionsLink'], "Expected From={$oldVersion}&To={$page->Version}, got: " . var_export($json,1));
 	}
 
