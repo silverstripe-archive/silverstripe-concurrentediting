@@ -9,7 +9,7 @@ var CurrentPage = {
 // Protect global namespace using this throwaway function.
 (function ConcurrentEditingNamespace() {
 
-	var pagePingInterval = 4; // (in seconds), how often ping goes out to check concurrent editing status.
+	var pagePingInterval = 2; // (in seconds), how often ping goes out to check concurrent editing status.
 	var overwriteDisplayDuration = 20; // length of time in seconds to show post-overwrite notice
 
 	var timerID = null;
