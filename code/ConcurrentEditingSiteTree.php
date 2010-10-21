@@ -31,6 +31,6 @@ class ConcurrentEditingSiteTree extends DataObjectDecorator {
 	}
 
 	function onBeforeWrite() {
-		$this->owner->LastEditedByID = Member::currentUserID();
+		if($this->owner->isChanged()) $this->owner->LastEditedByID = Member::currentUserID();
 	}
 }

@@ -9,7 +9,7 @@ var CurrentPage = {
 // Protect global namespace using this throwaway function.
 (function ConcurrentEditingNamespace() {
 
-	var pagePingInterval = 2; // (in seconds), how often ping goes out to check concurrent editing status.
+	var pagePingInterval = 3; // (in seconds), how often ping goes out to check concurrent editing status.
 	var overwriteDisplayDuration = 20; // length of time in seconds to show post-overwrite notice
 
 	var timerID = null;
@@ -31,6 +31,10 @@ var CurrentPage = {
 					switch(data.status) {
 						case 'editing':
 							if (showOverwroteMessage && data.isLastEditor) {
+								if(data.lastEditor == 'myself') {
+									showOverwroteMessage = false;
+									break;
+								}
 								$('SiteTree_Alert').style.border = '2px solid #FFD324';
 								$('SiteTree_Alert').style.backgroundColor = '#fff6bf';
 								$('SiteTree_Alert').innerHTML = "You just overwrote the version saved by " + data.lastEditor + ".  Compare those versions " + data.compareVersionsLink;

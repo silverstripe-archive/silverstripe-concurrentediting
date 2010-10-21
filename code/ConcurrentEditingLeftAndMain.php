@@ -8,7 +8,7 @@ class ConcurrentEditingLeftAndMain extends LeftAndMainDecorator {
 		'restoreRemotelyDeleted',
 	);
 	
-	static $edit_timeout = 6;
+	static $edit_timeout = 10;
 	
 	
 	function init() {
@@ -52,7 +52,7 @@ class ConcurrentEditingLeftAndMain extends LeftAndMainDecorator {
 					$return['compareVersionsLink'] = $link;
 					$member = DataObject::get_by_id('Member', $lastTwoVersions[1]->LastEditedByID);
 					if ($member) {
-						$return['lastEditor'] = $member->getTitle();
+						$return['lastEditor'] = Member::currentUserID() == $member->ID ? 'myself' : $member->getTitle();
 					}
 				}
 			}
