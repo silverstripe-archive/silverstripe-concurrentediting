@@ -26,11 +26,17 @@ class ConcurrentEditingSiteTree extends DataObjectDecorator {
 	}
 	
 	function updateCMSFields(&$fields) {
-		$alert = new LiteralField("SiteTree_Alert", '<div deletedfromstage="'.((int) $this->owner->getIsDeletedFromStage()).'" savecount="'.$this->owner->SaveCount.'" id="SiteTree_Alert"></div>');
+		$alert = new LiteralField("SiteTree_Alert", '<div
+			deletedfromstage="'.((int) $this->owner->getIsDeletedFromStage()).'"
+			savecount="'.$this->owner->SaveCount.'"
+			id="SiteTree_Alert"
+			pagepinginterval="' . ConcurrentEditingLeftAndMain::$page_ping_interval . '"
+			overwritedisplayduration="' . ConcurrentEditingLeftAndMain::$overwrite_display_duration . '"
+		></div>');
 		$fields->insertBefore($alert, 'Root');
 	}
 
 	function onBeforeWrite() {
-		$this->owner->LastEditedByID = Member::currentUserID();
+		if($this->owner->isChanged()) $this->owner->LastEditedByID = Member::currentUserID();
 	}
 }

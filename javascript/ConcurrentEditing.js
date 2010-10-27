@@ -9,12 +9,13 @@ var CurrentPage = {
 // Protect global namespace using this throwaway function.
 (function ConcurrentEditingNamespace() {
 
-	var pagePingInterval = 4; // (in seconds), how often ping goes out to check concurrent editing status.
-	var overwriteDisplayDuration = 20; // length of time in seconds to show post-overwrite notice
-
 	var timerID = null;
 	var saveHasBeenClicked = false;
 	var showOverwroteMessage = false;
+
+	function getSetting(attr) {
+		return $('SiteTree_Alert').getAttribute(attr);
+	}
 
 	/**
 	 * This function is called every `pagePingInterval` seconds, and checks the
@@ -31,11 +32,15 @@ var CurrentPage = {
 					switch(data.status) {
 						case 'editing':
 							if (showOverwroteMessage && data.isLastEditor) {
+								if(data.lastEditor == 'myself') {
+									showOverwroteMessage = false;
+									break;
+								}
 								$('SiteTree_Alert').style.border = '2px solid #FFD324';
 								$('SiteTree_Alert').style.backgroundColor = '#fff6bf';
 								$('SiteTree_Alert').innerHTML = "You just overwrote the version saved by " + data.lastEditor + ".  Compare those versions " + data.compareVersionsLink;
 								hasAlert = true;
-								setTimeout(function() { showOverwroteMessage = false; }, overwriteDisplayDuration * 1000);
+								setTimeout(function() { showOverwroteMessage = false; }, getSetting('overwriteDisplayDuration') * 1000);
 								break;
 							}
 							$('SiteTree_Alert').style.border = '2px solid #B5D4FE';
@@ -101,7 +106,7 @@ var CurrentPage = {
                 
 			adminPageHandler : function() {
 				if (!timerID && ($('Form_EditForm_ID') && $('SiteTree_Alert'))) {
-					timerID = setInterval(pingFunction, pagePingInterval*1000);
+					timerID = setInterval(pingFunction, getSetting('pagePingInterval')*1000);
 				}
 			},
 
