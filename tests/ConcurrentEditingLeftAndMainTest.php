@@ -67,6 +67,7 @@ class ConcurrentEditingLeftAndMainTest extends FunctionalTest {
 
 		// Save the page and check we're shown as lastEditor
 		$oldVersion = $page->Version;
+		$page->Title = 'new ' . $page->Title;
 		$page->write();
 		$resp = $this->get(sprintf($url, $page->SaveCount, $page->ID));
 		$this->assertEquals($page->UsersCurrentlyEditing()->Count(), 2);
@@ -79,6 +80,3 @@ class ConcurrentEditingLeftAndMainTest extends FunctionalTest {
 	}
 
 }
-
-
-?>
