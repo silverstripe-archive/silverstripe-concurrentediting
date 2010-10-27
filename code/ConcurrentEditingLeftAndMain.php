@@ -9,6 +9,8 @@ class ConcurrentEditingLeftAndMain extends LeftAndMainDecorator {
 	);
 	
 	static $edit_timeout = 10;
+	static $page_ping_interval = 3;
+	static $overwrite_display_duration = 20;
 	
 	
 	function init() {
