@@ -56,8 +56,8 @@ var CurrentPage = {
 							if (CurrentPage.isDeleted() == 0) {
 								$('SiteTree_Alert').style.border = '2px solid #ffd324';
 								$('SiteTree_Alert').style.backgroundColor = '#fff6bf';
-								$('SiteTree_Alert').innerHTML = "This page has been deleted since you opened it.";
-								$('SiteTree_Alert').innerHTML += " <a href='" + data.viewDeletedUrl + "'>View</a> or <a href='" + data.restoreDeletedUrl + "'>restore</a> the lates version it.";
+								$('SiteTree_Alert').innerHTML = "This page has been deleted recently.";
+								$('SiteTree_Alert').innerHTML += " <a href='" + data.viewDeletedUrl + "'>View</a> or <a href='" + data.restoreDeletedUrl + "'>restore</a>.";
 								jQuery('#form_actions_right input').attr("disabled", 'disabled');
 								jQuery('#form_actions_right').fadeTo("slow", 0.25);
 								hasAlert = true;
