@@ -87,6 +87,9 @@ var CurrentPage = {
 						$('SiteTree_Alert').style.marginBottom = '0px';
 						if ($('SiteTree_Alert').style.display != 'none') $('SiteTree_Alert').style.display = 'none';
 					}
+				},
+				onComplete: function(transport) {
+					if(transport.status >= 400) location.href = location.href;
 				}
 			});
 		}
